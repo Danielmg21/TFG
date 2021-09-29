@@ -1,7 +1,6 @@
 //=============================================================================
 // main.js v1.3.0
 //=============================================================================
-
 const scriptUrls = [
     "js/libs/pixi.js",
     "js/libs/pako.min.js",
@@ -17,20 +16,17 @@ const scriptUrls = [
     "js/plugins.js"
 ];
 const effekseerWasmUrl = "js/libs/effekseer.wasm";
-
 class Main {
     constructor() {
         this.xhrSucceeded = false;
         this.loadCount = 0;
         this.error = null;
     }
-
     run() {
         this.showLoadingSpinner();
         this.testXhr();
         this.loadMainScripts();
     }
-
     showLoadingSpinner() {
         const loadingSpinner = document.createElement("div");
         const loadingSpinnerImage = document.createElement("div");
@@ -39,21 +35,18 @@ class Main {
         loadingSpinner.appendChild(loadingSpinnerImage);
         document.body.appendChild(loadingSpinner);
     }
-
     eraseLoadingSpinner() {
         const loadingSpinner = document.getElementById("loadingSpinner");
         if (loadingSpinner) {
             document.body.removeChild(loadingSpinner);
         }
     }
-
     testXhr() {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", document.currentScript.src);
         xhr.onload = () => (this.xhrSucceeded = true);
         xhr.send();
     }
-
     loadMainScripts() {
         for (const url of scriptUrls) {
             const script = document.createElement("script");
