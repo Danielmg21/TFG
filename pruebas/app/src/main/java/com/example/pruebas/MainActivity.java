@@ -2,11 +2,13 @@ package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper;
@@ -17,12 +19,21 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webview;
     private TextView txtSpecialDir;
+    Button click;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txtSpecialDir = (TextView) findViewById(R.id.txtSpecialDir);
+        click = findViewById(R.id.time);
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(i);
+            }
+        });
         /*Ejecuta el codigo del juego 100%
         webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
