@@ -2,7 +2,7 @@
 null,
 {"id":1,"expanded":false,"name":"pruebasCasas","order":59,"parentId":0,"scrollX":1166.6666666666667,"scrollY":640.6666666666666},
 {"id":2,"expanded":false,"name":"Ciudad","order":2,"parentId":6,"scrollX":1081.3333333333333,"scrollY":722},
-{"id":3,"expanded":false,"name":"pueblo","order":9,"parentId":6,"scrollX":1092,"scrollY":1064.6666666666667},
+{"id":3,"expanded":false,"name":"pueblo","order":9,"parentId":6,"scrollX":1081.3333333333333,"scrollY":615.3333333333334},
 {"id":4,"expanded":false,"name":"Casa Inicio","order":10,"parentId":3,"scrollX":1081.3333333333333,"scrollY":615.3333333333334},
 {"id":5,"expanded":false,"name":"TorreTutorial","order":20,"parentId":32,"scrollX":1249.3333333333333,"scrollY":1656.6666666666667},
 {"id":6,"expanded":true,"name":"Wolrd Map","order":1,"parentId":0,"scrollX":1278.6666666666667,"scrollY":1760.6666666666667},
