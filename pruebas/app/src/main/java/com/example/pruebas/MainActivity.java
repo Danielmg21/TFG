@@ -20,5 +20,6 @@ public class MainActivity extends AppCompatActivity {
         webview.getSettings().setAllowFileAccess(true);
         webview.getSettings().setAllowFileAccessFromFileURLs(true);
         webview.loadUrl("file:///android_asset/Project3/index.html");
+        //pruebas
     }
 }
