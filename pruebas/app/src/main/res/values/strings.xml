@@ -3,4 +3,8 @@
     <string name="game_name">JUEGUITO</string>
     <string name="play">PLAY</string>
     <string name="creditos">CREDITOS</string>
+    <string name="time">TIME</string>
+    <string name="numero">NÚMERO</string>
+    <string name="nombre">NOMBRE</string>
+    <string name="warning">No se guardarán los cambios realizados, ¿Seguro que quieres continuar?</string>
 </resources>
