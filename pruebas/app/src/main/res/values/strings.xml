@@ -7,4 +7,7 @@
     <string name="numero">NÚMERO</string>
     <string name="nombre">NOMBRE</string>
     <string name="warning">No se guardarán los cambios realizados, ¿Seguro que quieres continuar?</string>
+    <string name="horario">HORARIO</string>
+    <string name="cantidad">CANTIDAD</string>
+    <string name="modificar">MODIFICAR</string>
 </resources>

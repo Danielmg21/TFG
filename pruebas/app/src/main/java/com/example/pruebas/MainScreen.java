@@ -12,8 +12,8 @@ import android.widget.ImageButton;
 
 public class MainScreen extends AppCompatActivity {
 
-    private Button buttonGame, buttonTime;
-    private ImageButton addPillButton;
+    private Button buttonGame;
+    private ImageButton showPillButton, ajustes;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -26,23 +26,32 @@ public class MainScreen extends AppCompatActivity {
                 openGameActivity();
             }
         });
-        addPillButton = (ImageButton) findViewById(R.id.timeButton);
-        addPillButton.setOnClickListener(new View.OnClickListener() {
+        showPillButton = findViewById(R.id.timeButton);
+        showPillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAddPillActivity();
+                openShowPillActivity();
             }
         });
-
+        ajustes = findViewById(R.id.ajustes);
+        ajustes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { pruebasActivity();}
+        });
     }
 
-    public void openGameActivity(){
+    protected void pruebasActivity() {
+        Intent intent = new Intent(this, ModifyMedicine.class);
+        startActivity(intent);
+    }
+
+    protected void openGameActivity(){
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
-    public void openAddPillActivity(){
-        Intent intent = new Intent(this, AddPillActivity.class);
+    protected void openShowPillActivity(){
+        Intent intent = new Intent(this, ShowPills.class);
         startActivity(intent);
     }
 

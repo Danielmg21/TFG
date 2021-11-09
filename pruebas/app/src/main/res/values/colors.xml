@@ -10,4 +10,8 @@
     <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#000</color>
+    <color name="colorGreen">#03DAC5</color>
+    <color name="tableBack">#8BF7F5</color>
+    <color name="tableHead">#117A65</color>
+    <color name="tableLetter">#D1F2EB </color>
 </resources>

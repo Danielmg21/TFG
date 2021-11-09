@@ -34,7 +34,7 @@
         android:background="@drawable/custom_button"/>
 
     <ImageButton
-        android:id="@+id/optionsButton"
+        android:id="@+id/ajustes"
         android:layout_width="63dp"
         android:layout_height="54dp"
         app:layout_constraintBottom_toBottomOf="parent"

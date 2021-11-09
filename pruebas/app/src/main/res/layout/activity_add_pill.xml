@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sky"
     tools:context=".AddPillActivity">
 
     <Button
         android:id="@+id/chooseDate"
         android:layout_width="267dp"
         android:layout_height="64dp"
+        android:background="@drawable/custom_button"
         android:onClick="popTimePicker"
         android:text="@string/time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.599"
-        android:background="@drawable/custom_button"/>
+        app:layout_constraintVertical_bias="0.59" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/cantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.373" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/cantidad1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -84,9 +84,9 @@
 
     <ImageButton
         android:id="@+id/cancelButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/custom_button2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.721"
@@ -96,10 +96,10 @@
         app:srcCompat="@drawable/outline_close_white_48" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="76dp"
-        android:layout_height="84dp"
-        android:background="@drawable/custom_button2"
+        android:id="@+id/addPillButton"
+        android:layout_width="59dp"
+        android:layout_height="55dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.256"
