@@ -36,7 +36,7 @@ public class MainScreen extends AppCompatActivity {
         ajustes = findViewById(R.id.ajustes);
         ajustes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { pruebasActivity();}
+            public void onClick(View v) { }
         });
     }
 

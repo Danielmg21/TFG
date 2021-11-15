@@ -25,4 +25,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS medicine");
         onCreate(db);
     }
+
 }

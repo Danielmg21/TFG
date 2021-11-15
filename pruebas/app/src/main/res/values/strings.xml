@@ -10,4 +10,7 @@
     <string name="horario">HORARIO</string>
     <string name="cantidad">CANTIDAD</string>
     <string name="modificar">MODIFICAR</string>
+    <string name="consultar">CONSULTAR</string>
+    <string name="eliminar">ELIMINAR</string>
+    <string name="limpiar">LIMPIAR</string>
 </resources>

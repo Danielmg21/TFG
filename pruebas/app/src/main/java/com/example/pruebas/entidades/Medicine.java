@@ -2,16 +2,21 @@ package com.example.pruebas.entidades;
 
 import java.util.Date;
 
-public class medicine {
+public class Medicine {
 
     private String name;
     private int cantidad;
-    private Date hora;
+    private int hora;
+    private int minutos;
 
-    public medicine(String name, int cantidad, Date hora) {
+    public Medicine(String name, int cantidad, int hora, int minutos) {
         this.name = name;
         this.cantidad = cantidad;
         this.hora = hora;
+        this.minutos = minutos;
+    }
+
+    public Medicine() {
     }
 
     public String getName() {
@@ -30,11 +35,19 @@ public class medicine {
         this.cantidad = cantidad;
     }
 
-    public Date getHora() {
+    public int getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(int hora) {
         this.hora = hora;
+    }
+
+    public int getMinutos() {
+        return minutos;
+    }
+
+    public void setMinutos(int minutos) {
+        this.minutos = minutos;
     }
 }

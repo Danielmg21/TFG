@@ -27,12 +27,12 @@ public class AddPillActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pill);
-        nombre = (EditText)findViewById(R.id.cantidad1);
-        cantidad = (EditText)findViewById(R.id.cantidad);
+        nombre = findViewById(R.id.cantidad1);
+        cantidad = findViewById(R.id.cantidad);
         timeButton = findViewById(R.id.chooseDate);
 
         //Método para cancelar la creacion de la pastilla
-        cancel = (ImageButton) findViewById(R.id.cancelButton);
+        cancel = findViewById(R.id.cancelButton);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,24 +41,30 @@ public class AddPillActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        openMainActivity();
+                        openShowPillActivity();
                     }
                 }).setNegativeButton("No",null).setCancelable(false);
                 AlertDialog alert = builder.create();
                 alert.show();
             }
         });
-
         //Método para guardar la informacion en la base de datos
-        save = (ImageButton) findViewById(R.id.addPillButton);
+        save = findViewById(R.id.addPillButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(AddPillActivity.this, "BASE DE DATOS CREADA", Toast.LENGTH_LONG).show();
                 registrarMedicine();
+                openShowPillActivity();
             }
         });
     }
+
+    private void openShowPillActivity() {
+        Intent intent = new Intent(this, ShowPills.class);
+        startActivity(intent);
+    }
+
     public void popTimePicker(View view){
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -73,20 +79,14 @@ public class AddPillActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    public void openMainActivity(){
-        Intent intent = new Intent(this, MainScreen.class);
-        startActivity(intent);
-    }
-
     private void registrarMedicine(){
         DataBaseHelper helper = new DataBaseHelper(AddPillActivity.this, "bd_medicine",null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        String hora = Integer.toString(hour) + Integer.toString(minute);
         values.put(Utilidades.CAMPO_NAME,nombre.getText().toString());
         values.put(Utilidades.CAMPO_CANTIDAD,cantidad.getText().toString());
-        values.put(Utilidades.CAMPO_HORA,hora);
-
+        //values.put(Utilidades.CAMPO_HORA, hour);
+        //values.put(Utilidades.CAMPO_MINUTOS, minute);
         Long idResultado = db.insert(Utilidades.TABLE_MEDICINE,Utilidades.CAMPO_NAME,values);
         Toast.makeText(getApplicationContext(),"Id registro"+idResultado,Toast.LENGTH_SHORT).show();
         db.close();
