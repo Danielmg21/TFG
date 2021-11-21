@@ -13,4 +13,5 @@
     <string name="consultar">CONSULTAR</string>
     <string name="eliminar">ELIMINAR</string>
     <string name="limpiar">LIMPIAR</string>
+    <string name="hora">HORA</string>
 </resources>

@@ -85,8 +85,8 @@ public class AddPillActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(Utilidades.CAMPO_NAME,nombre.getText().toString());
         values.put(Utilidades.CAMPO_CANTIDAD,cantidad.getText().toString());
-        //values.put(Utilidades.CAMPO_HORA, hour);
-        //values.put(Utilidades.CAMPO_MINUTOS, minute);
+        values.put(Utilidades.CAMPO_HORA, hour);
+        values.put(Utilidades.CAMPO_MINUTOS, minute);
         Long idResultado = db.insert(Utilidades.TABLE_MEDICINE,Utilidades.CAMPO_NAME,values);
         Toast.makeText(getApplicationContext(),"Id registro"+idResultado,Toast.LENGTH_SHORT).show();
         db.close();

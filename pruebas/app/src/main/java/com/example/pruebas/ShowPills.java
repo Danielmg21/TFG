@@ -26,7 +26,7 @@ public class ShowPills extends AppCompatActivity {
     private ListView listViewPill;
     ArrayList<String> listaInformacion;
     ArrayList<Medicine> listaPill;
-    DataBaseHelper conn;
+    public DataBaseHelper conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +72,8 @@ public class ShowPills extends AppCompatActivity {
 
     private void consultarListaMedicine() {
         SQLiteDatabase db = conn.getReadableDatabase();
-        Medicine medicine = null;
-        listaPill = new ArrayList<Medicine>();
+        Medicine medicine;
+        listaPill = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utilidades.TABLE_MEDICINE, null);
 
         while(cursor.moveToNext()){
@@ -81,7 +81,7 @@ public class ShowPills extends AppCompatActivity {
             medicine.setName(cursor.getString(0));
             medicine.setCantidad(cursor.getInt(1));
             medicine.setHora(cursor.getInt(2));
-            //medicine.setMinutos(cursor.getInt(3));
+            medicine.setMinutos(cursor.getInt(3));
             listaPill.add(medicine);
         }
         obtenerLista();
@@ -90,7 +90,9 @@ public class ShowPills extends AppCompatActivity {
     private void obtenerLista() {
         listaInformacion = new ArrayList<String>();
         for(int i = 0; i < listaPill.size(); i++){
-            listaInformacion.add(listaPill.get(i).getName() +" - " + listaPill.get(i).getCantidad() +" - " + listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos());
+            //Por decision de diseño no mostrar la cantidad de pastillas en la ventana de mostrar AllPills
+            //listaInformacion.add(listaPill.get(i).getName() +" --- Cantidad --- " + listaPill.get(i).getCantidad() +" --- Horario --- " + listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos());
+            listaInformacion.add(listaPill.get(i).getName() +" | --- | Horario | --- | " + listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos());
         }
     }
 

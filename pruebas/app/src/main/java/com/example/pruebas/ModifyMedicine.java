@@ -65,7 +65,7 @@ public class ModifyMedicine extends AppCompatActivity {
         limpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                limpiar();
+                wipeBBDD();
             }
         });
         back = findViewById(R.id.modifyBack);

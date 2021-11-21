@@ -8,6 +8,7 @@ public class Medicine {
     private int cantidad;
     private int hora;
     private int minutos;
+    private String descripcion;
 
     public Medicine(String name, int cantidad, int hora, int minutos) {
         this.name = name;
@@ -16,8 +17,7 @@ public class Medicine {
         this.minutos = minutos;
     }
 
-    public Medicine() {
-    }
+    public Medicine() { }
 
     public String getName() {
         return name;
@@ -49,5 +49,13 @@ public class Medicine {
 
     public void setMinutos(int minutos) {
         this.minutos = minutos;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
