@@ -2,6 +2,8 @@ package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,39 +13,41 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.pruebas.entidades.Medicine;
 import com.example.pruebas.utilidades.Utilidades;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ModifyMedicine extends AppCompatActivity {
 
     DataBaseHelper conn;
     private TextView campoNombre, campoCantidad;
-    private Button consulta, eliminar, modificar, limpiar;
+    private Button  eliminar, modificar, timeButton;
     private ImageButton back;
+    private String nombreMedicine;
+    private int hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_medicine);
-        conn = new DataBaseHelper(getApplicationContext(),"bd_medicine", null, 1);
-        //Bundle extras = getIntent().getExtras();
-        /*ArrayList<String> data = extras.getStringArrayList("key");
-        String nombre = data.get(0);
-        int cantidad = Integer.parseInt(data.get(1));
-        String hora = data.get(2);
-        campoNombre.setText(nombre);
-        campoCantidad.setText(cantidad);
-        */
         campoNombre = findViewById(R.id.campoMedicine);
         campoCantidad = findViewById(R.id.campoCantidad);
-        consulta = findViewById(R.id.consultar);
-        consulta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { consultarDatos();}
-        });
+        timeButton = findViewById(R.id.chooseDate);
+        conn = new DataBaseHelper(getApplicationContext(),"bd_medicine", null, 1);
+        Bundle extras = getIntent().getExtras();
+        Medicine medicine = null;
+        if(extras != null){
+            medicine = (Medicine) extras.getSerializable("medicina");
+            campoNombre.setText(medicine.getName());
+            campoCantidad.setText(String.valueOf(medicine.getCantidad()));
+            timeButton.setText(String.format(Locale.getDefault(),"%02d:%02d", medicine.getHora(), medicine.getMinutos()));
+            nombreMedicine = medicine.getName();
+        }
 
         eliminar = findViewById(R.id.eliminar);
         eliminar.setOnClickListener(new View.OnClickListener() {
@@ -57,17 +61,11 @@ public class ModifyMedicine extends AppCompatActivity {
         modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modificarDatos();
+                modificarDatos(nombreMedicine);
                 volver();
             }
         });
-        limpiar = findViewById(R.id.limpiar);
-        limpiar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wipeBBDD();
-            }
-        });
+
         back = findViewById(R.id.modifyBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,29 +91,15 @@ public class ModifyMedicine extends AppCompatActivity {
         db.close();
     }
 
-    //Metodo para consultar informacion sobre un dato por medio del nombre
-    private void consultarDatos(){
-        SQLiteDatabase db = conn.getReadableDatabase();
-        String[] parametros = {campoNombre.getText().toString()};
-        String[] campos = {Utilidades.CAMPO_NAME, Utilidades.CAMPO_CANTIDAD};
-        try{
-            Cursor cursor = db.query(Utilidades.TABLE_MEDICINE, campos, Utilidades.CAMPO_NAME+"=?", parametros, null, null, null);
-            cursor.moveToFirst();
-            campoCantidad.setText(cursor.getString(1));
-            cursor.close();
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"El documento no existe", Toast.LENGTH_LONG).show();
-            limpiar();
-        }
-    }
-
     //Modificar la informacion de un medicamento buscando por su nombre
-    private void modificarDatos(){
+    private void modificarDatos(String nombreMedicine){
         SQLiteDatabase db = conn.getReadableDatabase();
-        String[] parametros = {campoNombre.getText().toString()};
+        String[] parametros = {nombreMedicine};
         ContentValues values = new ContentValues();
         values.put(Utilidades.CAMPO_NAME, campoNombre.getText().toString());
         values.put(Utilidades.CAMPO_CANTIDAD, campoCantidad.getText().toString());
+        values.put(Utilidades.CAMPO_HORA, hour);
+        values.put(Utilidades.CAMPO_MINUTOS, minute);
         db.update(Utilidades.TABLE_MEDICINE, values, Utilidades.CAMPO_NAME+"=?", parametros);
         Toast.makeText(getApplicationContext(),"Ya se actualizo", Toast.LENGTH_LONG).show();
         limpiar();
@@ -127,9 +111,18 @@ public class ModifyMedicine extends AppCompatActivity {
         campoCantidad.setText("");
     }
 
-    private void wipeBBDD(){
-        SQLiteDatabase db = conn.getReadableDatabase();
-        db.execSQL("DELETE FROM medicine");
-        db.close();
+    public void popTimePicker(View view){
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectHour, int selectMinute) {
+                hour = selectHour;
+                minute = selectMinute;
+                timeButton.setText(String.format(Locale.getDefault(),"%02d:%02d", hour, minute));
+            }
+        };
+        int style = AlertDialog.THEME_HOLO_DARK;
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+        timePickerDialog.show();
     }
+
 }

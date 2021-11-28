@@ -1,8 +1,9 @@
 package com.example.pruebas.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Medicine {
+public class Medicine implements Serializable {
 
     private String name;
     private int cantidad;

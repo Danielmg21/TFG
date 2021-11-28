@@ -54,17 +54,11 @@ public class ShowPills extends AppCompatActivity {
         listViewPill.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l){
-                String nombre = listaPill.get(pos).getName();
-                int cantidad = listaPill.get(pos).getCantidad();
-                int hora = listaPill.get(pos).getHora();
-                int minutos = listaPill.get(pos).getMinutos();
-                ArrayList<String> info = new ArrayList();
-                info.add(nombre);
-                info.add(String.valueOf(cantidad));
-                info.add(String.valueOf(hora));
-                info.add(String.valueOf(minutos));
-                Intent intent = new Intent(ShowPills.this,ModifyMedicine.class);
-                //intent.putExtra("key", info);
+                Medicine medicine = listaPill.get(pos);
+                Intent intent = new Intent(ShowPills.this, ModifyMedicine.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("medicina", medicine);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -90,9 +84,7 @@ public class ShowPills extends AppCompatActivity {
     private void obtenerLista() {
         listaInformacion = new ArrayList<String>();
         for(int i = 0; i < listaPill.size(); i++){
-            //Por decision de diseño no mostrar la cantidad de pastillas en la ventana de mostrar AllPills
-            //listaInformacion.add(listaPill.get(i).getName() +" --- Cantidad --- " + listaPill.get(i).getCantidad() +" --- Horario --- " + listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos());
-            listaInformacion.add(listaPill.get(i).getName() +" | --- | Horario | --- | " + listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos());
+            listaInformacion.add(listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos() + " ---> " + listaPill.get(i).getName() + " ---> Cantidad: " + listaPill.get(i).getCantidad());
         }
     }
 
