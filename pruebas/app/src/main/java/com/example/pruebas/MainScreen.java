@@ -1,6 +1,8 @@
 package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -9,6 +11,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,6 +25,7 @@ public class MainScreen extends AppCompatActivity {
 
     private Button buttonGame;
     private ImageButton showPillButton, ajustes;
+    private String channelID = "notificationID";
 
 
     protected void onCreate (Bundle savedInstanceState){
@@ -29,7 +33,7 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
         crearCanal();
 
-        buttonGame = (Button) findViewById(R.id.playButton);
+        buttonGame =  findViewById(R.id.playButton);
         buttonGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,21 +55,23 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void crearNotificacion() {
-        Toast.makeText(MainScreen.this, "reminder", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainScreen.this, Notification.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, intent, 0);
+        Intent intent = new Intent(MainScreen.this, MainScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        long timeClick = System.currentTimeMillis();
-        long tenSec = 1000 * 5;
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                timeClick + tenSec,
-                pendingIntent);
-    }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
+                .setSmallIcon(R.drawable.logo)
+                .setColor(Color.RED)
+                .setContentTitle("THE DRAGON´S CAVE")
+                .setContentText("Rápido puedes recibir la bendición de la Diosa")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setChannelId(channelID)
+                .setAutoCancel(true);
 
-    protected void pruebasActivity() {
-        Intent intent = new Intent(this, ModifyMedicine.class);
-        startActivity(intent);
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from((this));
+        notificationManagerCompat.notify(1, builder.build());
     }
 
     protected void openGameActivity(){
@@ -80,11 +86,10 @@ public class MainScreen extends AppCompatActivity {
 
     private void crearCanal(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            Toast.makeText(MainScreen.this, "Creaando canal", Toast.LENGTH_SHORT).show();
             CharSequence name = "CANAL";
             String descripcion = "DEscripcion del canal";
             int importancia = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel canal = new NotificationChannel("notificationID", name, importancia);
+            NotificationChannel canal = new NotificationChannel(channelID, name, importancia);
             canal.setDescription(descripcion);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
