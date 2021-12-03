@@ -47,30 +47,32 @@
         android:background="@drawable/custom_button"/>
 
     <ImageButton
-        android:id="@+id/musicButton"
+        android:id="@+id/musicOnButton"
         android:layout_width="63dp"
         android:layout_height="61dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.907"
-        app:srcCompat="@drawable/outline_music_note_white_18"
-        android:background="@drawable/custom_button"/>
+        app:srcCompat="@drawable/ic_baseline_music_note_24"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
-        android:id="@+id/soundButton"
+        android:id="@+id/musicOffButton"
         android:layout_width="53dp"
         android:layout_height="57dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.343"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.908"
-        app:srcCompat="@drawable/outline_volume_off_white_18"
-        android:background="@drawable/custom_button"/>
+        app:srcCompat="@drawable/ic_baseline_music_off_24"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/timeButton"

@@ -9,34 +9,38 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-public class MainScreen extends AppCompatActivity {
+
+public class MainScreen extends AppCompatActivity{
 
     private Button buttonGame;
-    private ImageButton showPillButton, ajustes;
+    private ImageButton showPillButton, ajustes, musicOn, musicOff;
     private String channelID = "notificationID";
+    public MediaPlayer music;
+    private int paused;
 
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
         crearCanal();
+        startMusic();
 
         buttonGame =  findViewById(R.id.playButton);
         buttonGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopMuscic();
                 openGameActivity();
             }
         });
@@ -51,6 +55,20 @@ public class MainScreen extends AppCompatActivity {
         ajustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { crearNotificacion();}
+        });
+        musicOn = findViewById(R.id.musicOnButton);
+        musicOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                startMusic();
+            }
+        });
+        musicOff = findViewById(R.id.musicOffButton);
+        musicOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopMuscic();
+            }
         });
     }
 
@@ -110,6 +128,37 @@ public class MainScreen extends AppCompatActivity {
                 }).setNegativeButton("No",null);
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void startMusic(){
+        if (music == null){
+            music = MediaPlayer.create(this, R.raw.music);
+            music.start();
+            music.setVolume(0,5);
+            music.setLooping(true);
+        }else if(!music.isPlaying()){
+            music.seekTo(paused);
+            music.start();
+            music.setVolume(0,5);
+        }
+    }
+
+    public void stopMuscic(){
+        music.release();
+        music = null;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        paused = music.getCurrentPosition();
+        music.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startMusic();
     }
 
 }

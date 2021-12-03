@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.example.pruebas.entidades.Medicine;
 import com.example.pruebas.utilidades.Utilidades;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ShowPills extends AppCompatActivity {
 
