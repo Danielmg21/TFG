@@ -22,6 +22,8 @@ public class AddPillActivity extends AppCompatActivity {
     int hour, minute;
     ImageButton cancel, save;
     EditText nombre,cantidad;
+    public MediaManager manager;
+    public int music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,12 @@ public class AddPillActivity extends AppCompatActivity {
         nombre = findViewById(R.id.cantidad1);
         cantidad = findViewById(R.id.cantidad);
         timeButton = findViewById(R.id.chooseDate);
+        Bundle extras = getIntent().getExtras();
+        music = extras.getInt("music");
+        if (music == 1 ){
+            manager = new MediaManager(this);
+            manager.startMusicModifyPill();
+        }
 
         //Método para cancelar la creacion de la pastilla
         cancel = findViewById(R.id.cancelButton);
@@ -41,7 +49,7 @@ public class AddPillActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        openShowPillActivity();
+                        finish();
                     }
                 }).setNegativeButton("No",null).setCancelable(false);
                 AlertDialog alert = builder.create();
@@ -55,14 +63,9 @@ public class AddPillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(AddPillActivity.this, "BASE DE DATOS CREADA", Toast.LENGTH_LONG).show();
                 registrarMedicine();
-                openShowPillActivity();
+                finish();
             }
         });
-    }
-
-    private void openShowPillActivity() {
-        Intent intent = new Intent(this, ShowPills.class);
-        startActivity(intent);
     }
 
     public void popTimePicker(View view){
@@ -91,5 +94,20 @@ public class AddPillActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Id registro"+idResultado,Toast.LENGTH_SHORT).show();
         db.close();
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (music == 1) {
+            int paused = manager.time();
+            manager.setPaused(paused);
+            manager.pauseMusic();
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (music == 1){
+            manager.startMusic();
+        }
+    }
 }

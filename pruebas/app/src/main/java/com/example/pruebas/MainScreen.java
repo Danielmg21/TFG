@@ -26,21 +26,22 @@ public class MainScreen extends AppCompatActivity{
     private Button buttonGame;
     private ImageButton showPillButton, ajustes, musicOn, musicOff;
     private String channelID = "notificationID";
-    public MediaPlayer music;
-    private int paused;
+    private MediaManager manager;
+    public int music;
 
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
         crearCanal();
-        startMusic();
+        manager = new MediaManager(this);
+        manager.startMusic();
 
         buttonGame =  findViewById(R.id.playButton);
         buttonGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopMuscic();
+                manager.stopMuscic();
                 openGameActivity();
             }
         });
@@ -60,14 +61,16 @@ public class MainScreen extends AppCompatActivity{
         musicOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                startMusic();
+                manager.startMusic();
             }
         });
         musicOff = findViewById(R.id.musicOffButton);
         musicOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopMuscic();
+                if(manager.getMusic() != null){
+                    manager.stopMuscic();
+                }
             }
         });
     }
@@ -99,6 +102,14 @@ public class MainScreen extends AppCompatActivity{
 
     protected void openShowPillActivity(){
         Intent intent = new Intent(this, ShowPills.class);
+        if(manager.getMusic() != null){
+            music = 1;
+        }else{
+            music = 0;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("music", music);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -130,35 +141,21 @@ public class MainScreen extends AppCompatActivity{
         alert.show();
     }
 
-    public void startMusic(){
-        if (music == null){
-            music = MediaPlayer.create(this, R.raw.music);
-            music.start();
-            music.setVolume(0,5);
-            music.setLooping(true);
-        }else if(!music.isPlaying()){
-            music.seekTo(paused);
-            music.start();
-            music.setVolume(0,5);
-        }
-    }
-
-    public void stopMuscic(){
-        music.release();
-        music = null;
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
-        paused = music.getCurrentPosition();
-        music.pause();
+        if(manager.getMusic() != null){
+            manager.setPaused(manager.time());
+            manager.pauseMusic();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startMusic();
+        if(manager.getMusic() != null) {
+            manager.startMusic();
+        }
     }
 
 }

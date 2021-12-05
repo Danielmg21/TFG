@@ -26,19 +26,27 @@ public class ShowPills extends AppCompatActivity {
     ArrayList<String> listaInformacion;
     ArrayList<Medicine> listaPill;
     public DataBaseHelper conn;
+    public MediaManager manager;
+    public int music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_pills);
-        addPillButton =  findViewById(R.id.addPillButton1);
+        Bundle extras = getIntent().getExtras();
+        music = extras.getInt("music");
+        if (music == 1 ){
+            manager = new MediaManager(this);
+            manager.startMusicShowPill();
+        }
+        addPillButton = findViewById(R.id.addPillButton1);
         addPillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addPillActivity();
             }
         });
-        backButton =  findViewById(R.id.backButton);
+        backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,17 +54,18 @@ public class ShowPills extends AppCompatActivity {
             }
         });
         listViewPill = findViewById(R.id.listViewPill);
-        conn = new DataBaseHelper(getApplicationContext(),"bd_medicine", null, 1);
+        conn = new DataBaseHelper(getApplicationContext(), "bd_medicine", null, 1);
         consultarListaMedicine();
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
         listViewPill.setAdapter(adaptador);
-        listViewPill.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listViewPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Medicine medicine = listaPill.get(pos);
                 Intent intent = new Intent(ShowPills.this, ModifyMedicine.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("medicina", medicine);
+                bundle.putSerializable("music", music);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -89,13 +98,31 @@ public class ShowPills extends AppCompatActivity {
 
     protected void addPillActivity(){
         Intent intent = new Intent(this, AddPillActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("music", music);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
     protected void backActivity(){
-        Intent intent = new Intent(this, MainScreen.class);
-        startActivity(intent);
+        finish();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (music == 1) {
+            int paused = manager.time();
+            manager.setPaused(paused);
+            manager.pauseMusic();
+        }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (music == 1){
+            manager.startMusic();
+        }
+    }
 }

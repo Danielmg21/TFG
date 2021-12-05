@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        GameActivity.super.onBackPressed();
+                        finish();
                     }
                 }).setNegativeButton("No",null);
         AlertDialog alert = builder.create();

@@ -30,6 +30,8 @@ public class ModifyMedicine extends AppCompatActivity {
     private ImageButton back;
     private String nombreMedicine;
     private int hour, minute;
+    public MediaManager manager;
+    public int music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class ModifyMedicine extends AppCompatActivity {
         timeButton = findViewById(R.id.chooseDate);
         conn = new DataBaseHelper(getApplicationContext(),"bd_medicine", null, 1);
         Bundle extras = getIntent().getExtras();
+        music = extras.getInt("music");
+        if (music == 1 ){
+            manager = new MediaManager(this);
+            manager.startMusicModifyPill();
+        }
         Medicine medicine = null;
         if(extras != null){
             medicine = (Medicine) extras.getSerializable("medicina");
@@ -74,8 +81,7 @@ public class ModifyMedicine extends AppCompatActivity {
     }
 
     private void volver() {
-        Intent intent = new Intent(this, ShowPills.class);
-        startActivity(intent);
+        finish();
     }
 
 
@@ -123,6 +129,23 @@ public class ModifyMedicine extends AppCompatActivity {
         int style = AlertDialog.THEME_HOLO_DARK;
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
         timePickerDialog.show();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (music == 1) {
+            int paused = manager.time();
+            manager.setPaused(paused);
+            manager.pauseMusic();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (music == 1){
+            manager.startMusic();
+        }
     }
 
 }
