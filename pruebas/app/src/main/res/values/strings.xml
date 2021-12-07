@@ -14,5 +14,6 @@
     <string name="eliminar">ELIMINAR</string>
     <string name="limpiar">LIMPIAR</string>
     <string name="hora">HORA</string>
-    <string name="añadirMedicamento">INTRODUZCA LOS VALORES PORFAVOR</string>
+    <string name="añadirMedicamento">CREAR NUEVA ALERTA</string>
+    <string name="modificarMedicamento">MODIFICAR ALERTA</string>
 </resources>

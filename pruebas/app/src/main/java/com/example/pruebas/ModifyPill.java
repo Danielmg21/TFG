@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,7 +23,7 @@ import com.example.pruebas.utilidades.Utilidades;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ModifyMedicine extends AppCompatActivity {
+public class ModifyPill extends AppCompatActivity {
 
     DataBaseHelper conn;
     private TextView campoNombre, campoCantidad;
@@ -32,6 +33,8 @@ public class ModifyMedicine extends AppCompatActivity {
     private int hour, minute;
     public MediaManager manager;
     public int music;
+    public Medicine medicine;
+    private String nombre, cantidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,6 @@ public class ModifyMedicine extends AppCompatActivity {
             manager = new MediaManager(this);
             manager.startMusicModifyPill();
         }
-        Medicine medicine = null;
         if(extras != null){
             medicine = (Medicine) extras.getSerializable("medicina");
             campoNombre.setText(medicine.getName());
@@ -60,30 +62,38 @@ public class ModifyMedicine extends AppCompatActivity {
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eliminarDatos();
-                volver();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModifyPill.this);
+                builder.setMessage("Se eliminarán todos los datos guardados, ¿Seguro que quieres continuar?")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                eliminarDatos();
+                                finish();
+                            }
+                        }).setNegativeButton("No",null).setCancelable(false);
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
         modificar = findViewById(R.id.modificar);
         modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modificarDatos(nombreMedicine);
-                volver();
+                if(comprobarCampos()){
+                    modificarDatos(nombreMedicine);
+                    finish();
+                }else{
+
+                }
             }
         });
 
         back = findViewById(R.id.modifyBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {volver();}
+            public void onClick(View v) {finish();}
         });
     }
-
-    private void volver() {
-        finish();
-    }
-
 
     //Metdo encargdo de eliminar la infomacion guardada en la base de datos
     //buscando por el nombre del medicamento
@@ -127,8 +137,17 @@ public class ModifyMedicine extends AppCompatActivity {
             }
         };
         int style = AlertDialog.THEME_HOLO_DARK;
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, medicine.getHora(), medicine.getMinutos(), true);
         timePickerDialog.show();
+    }
+    public boolean comprobarCampos(){
+        nombre = campoNombre.getText().toString();
+        cantidad = campoCantidad.getText().toString();
+        if(nombre.matches("") || cantidad.matches("")){
+            Toast.makeText(this, "Porfavor rellena los campos requeridos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
     @Override
     protected void onPause() {

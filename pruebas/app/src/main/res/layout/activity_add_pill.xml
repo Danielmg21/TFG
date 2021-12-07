@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/space"
-    tools:context=".AddPillActivity">
+    tools:context=".AddPill">
 
     <Button
         android:id="@+id/chooseDate"
@@ -38,6 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nombre"
+        android:fontFamily="@font/broad"
+        android:gravity="center"
+        android:textColor="#00FFFF"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.099"
@@ -50,6 +54,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cantidad"
+        android:fontFamily="@font/broad"
+        android:gravity="center"
+        android:textColor="#00FFFF"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.099"
@@ -72,15 +80,19 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="87dp"
+        android:fontFamily="@font/broad"
         android:text="@string/añadirMedicamento"
+        android:textColor="#00FFFF"
+        android:textSize="30dp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.081" />
+        app:layout_constraintVertical_bias="0.082" />
 
     <ImageButton
         android:id="@+id/cancelButton"

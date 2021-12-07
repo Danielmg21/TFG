@@ -22,8 +22,8 @@
 
     <Button
         android:id="@+id/pruebas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:text="@string/creditos"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,25 +35,25 @@
 
     <ImageButton
         android:id="@+id/ajustes"
-        android:layout_width="63dp"
-        android:layout_height="54dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.614"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.908"
-        app:srcCompat="@drawable/outline_settings_white_18"
-        android:background="@drawable/custom_button"/>
-
-    <ImageButton
-        android:id="@+id/musicOnButton"
-        android:layout_width="63dp"
-        android:layout_height="61dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.907"
+        app:srcCompat="@drawable/outline_settings_white_18" />
+
+    <ImageButton
+        android:id="@+id/musicOnButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.907"
@@ -62,15 +62,15 @@
 
     <ImageButton
         android:id="@+id/musicOffButton"
-        android:layout_width="53dp"
-        android:layout_height="57dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.908"
+        app:layout_constraintVertical_bias="0.907"
         app:srcCompat="@drawable/ic_baseline_music_off_24"
         tools:ignore="VectorDrawableCompat" />
 
@@ -86,4 +86,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.756"
         app:srcCompat="@drawable/outline_schedule_white_18" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="292dp"
+        android:layout_height="110dp"
+        android:fontFamily="@font/mandhor"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#E31D1D"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122" />
 </androidx.constraintlayout.widget.ConstraintLayout>

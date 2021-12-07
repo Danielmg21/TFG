@@ -17,7 +17,6 @@ import com.example.pruebas.entidades.Medicine;
 import com.example.pruebas.utilidades.Utilidades;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ShowPills extends AppCompatActivity {
 
@@ -28,6 +27,7 @@ public class ShowPills extends AppCompatActivity {
     public DataBaseHelper conn;
     public MediaManager manager;
     public int music;
+    public String hora, minutos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class ShowPills extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Medicine medicine = listaPill.get(pos);
-                Intent intent = new Intent(ShowPills.this, ModifyMedicine.class);
+                Intent intent = new Intent(ShowPills.this, ModifyPill.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("medicina", medicine);
                 bundle.putSerializable("music", music);
@@ -92,12 +92,23 @@ public class ShowPills extends AppCompatActivity {
     private void obtenerLista() {
         listaInformacion = new ArrayList<String>();
         for(int i = 0; i < listaPill.size(); i++){
-            listaInformacion.add(listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos() + " ---> " + listaPill.get(i).getName() + " ---> Cantidad: " + listaPill.get(i).getCantidad());
+            if(listaPill.get(i).getHora() < 10){
+                hora = "0" + listaPill.get(i).getHora();
+            }else{
+                hora = String.valueOf(listaPill.get(i).getHora());
+            }
+            if(listaPill.get(i).getMinutos() < 10){
+                minutos = "0" + listaPill.get(i).getMinutos();
+            }else{
+                minutos = String.valueOf(listaPill.get(i).getMinutos());
+            }
+            //listaInformacion.add(listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos() + " ---> " + listaPill.get(i).getName() + " ---> Cantidad: " + listaPill.get(i).getCantidad());
+            listaInformacion.add("Nombre: " + listaPill.get(i).getName() + " | Cantidad: " + listaPill.get(i).getCantidad() + " | Hora: " + hora + ":" + minutos);
         }
     }
 
     protected void addPillActivity(){
-        Intent intent = new Intent(this, AddPillActivity.class);
+        Intent intent = new Intent(this, AddPill.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("music", music);
         intent.putExtras(bundle);
@@ -124,5 +135,14 @@ public class ShowPills extends AppCompatActivity {
         if (music == 1){
             manager.startMusic();
         }
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        listViewPill = findViewById(R.id.listViewPill);
+        conn = new DataBaseHelper(getApplicationContext(), "bd_medicine", null, 1);
+        consultarListaMedicine();
+        ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
+        listViewPill.setAdapter(adaptador);
     }
 }

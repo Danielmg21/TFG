@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".ModifyMedicine"></activity>
+        <activity android:name=".ModifyPill"></activity>
         <activity android:name=".ShowPills" />
-        <activity android:name=".AddPillActivity" />
+        <activity android:name=".AddPill" />
         <activity android:name=".GameActivity"/>
         <activity
             android:name=".MainScreen"

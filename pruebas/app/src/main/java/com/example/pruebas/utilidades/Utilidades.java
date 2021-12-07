@@ -8,6 +8,7 @@ public class Utilidades {
     public static final String CAMPO_HORA = "hora";
     public static final String CAMPO_DESCRIPCION = "descripcion";
     public static final String CAMPO_MINUTOS = "minutos";
+    public static final String CAMPO_FECHA = "fecha";
 
     public static final String CREAR_TABLA_MEDICINE = "CREATE TABLE " +
             "" +TABLE_MEDICINE + " (" + CAMPO_NAME + " TEXT, "
