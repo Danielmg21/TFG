@@ -1,0 +1,12 @@
+{
+    "name": "rmmz-game",
+    "main": "index.html",
+    "chromium-args": "--force-color-profile=srgb --disable-devtools",
+    "window": {
+        "title": "Dragon´s Cave",
+        "width": 640,
+        "height": 1280,
+        "position": "center",
+        "icon": "icon/icon.png"
+    }
+}

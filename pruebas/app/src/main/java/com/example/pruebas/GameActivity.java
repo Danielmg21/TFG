@@ -25,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
         webview.setWebViewClient(new WebViewClient());
         webview.getSettings().setAllowFileAccess(true);
         webview.getSettings().setAllowFileAccessFromFileURLs(true);
-        webview.loadUrl("file:///android_asset/Project3/index.html");
+        webview.loadUrl("file:///android_asset/TFG/index.html");
         //(new Handler()).postDelayed(this::esperar, 2500);
     }
 
