@@ -41,7 +41,9 @@ public class MainScreen extends AppCompatActivity{
         buttonGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manager.stopMuscic();
+                if(manager.getMusic() != null){
+                    manager.stopMuscic();
+                }
                 openGameActivity();
             }
         });
