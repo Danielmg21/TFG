@@ -9,13 +9,14 @@ public class Medicine implements Serializable {
     private int cantidad;
     private int hora;
     private int minutos;
-    private String descripcion;
+    private int id;
 
-    public Medicine(String name, int cantidad, int hora, int minutos) {
+    public Medicine(String name, int cantidad, int hora, int minutos, int id) {
         this.name = name;
         this.cantidad = cantidad;
         this.hora = hora;
         this.minutos = minutos;
+        this.id = id;
     }
 
     public Medicine() { }
@@ -52,11 +53,11 @@ public class Medicine implements Serializable {
         this.minutos = minutos;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public int getId() {
+        return id;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setId(int id) {
+        this.id = id;
     }
 }

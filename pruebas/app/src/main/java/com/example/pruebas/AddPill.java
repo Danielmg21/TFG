@@ -1,19 +1,31 @@
 package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import com.example.pruebas.utilidades.MediaManager;
+import com.example.pruebas.utilidades.Reminder;
 import com.example.pruebas.utilidades.Utilidades;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class AddPill extends AppCompatActivity {
 
@@ -21,7 +33,7 @@ public class AddPill extends AppCompatActivity {
     String nombreMedicina, cantidadMedicina;
     ImageButton cancel, save;
     EditText nombre,cantidad;
-    int hour, minute;
+    int hour, minute, random;
 
     public MediaManager manager;
     public int music;
@@ -65,6 +77,7 @@ public class AddPill extends AppCompatActivity {
                 //Toast.makeText(AddPillActivity.this, "BASE DE DATOS CREADA", Toast.LENGTH_LONG).show();
                 if (comprobarCampos()){
                     registrarMedicine();
+                    registerNotification();
                     finish();
                 }
             }
@@ -94,18 +107,35 @@ public class AddPill extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    public void registerNotification(){
+        Intent intent = new Intent(AddPill.this, Reminder.class);
+        intent.putExtra("id", random);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(AddPill.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * 60 *24, pendingIntent);
+    }
+
     private void registrarMedicine(){
         DataBaseHelper helper = new DataBaseHelper(AddPill.this, "bd_medicine",null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        random = new Random().nextInt(1001);
         values.put(Utilidades.CAMPO_NAME,nombreMedicina);
         values.put(Utilidades.CAMPO_CANTIDAD,cantidadMedicina);
         values.put(Utilidades.CAMPO_HORA, hour);
         values.put(Utilidades.CAMPO_MINUTOS, minute);
+        values.put(Utilidades.CAMPO_ID, random);
         Long idResultado = db.insert(Utilidades.TABLE_MEDICINE,Utilidades.CAMPO_NAME,values);
         Toast.makeText(getApplicationContext(),"Id registro"+idResultado,Toast.LENGTH_SHORT).show();
         db.close();
     }
+
     @Override
     protected void onPause() {
         super.onPause();

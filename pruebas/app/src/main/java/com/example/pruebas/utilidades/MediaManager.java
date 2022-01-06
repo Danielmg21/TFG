@@ -1,7 +1,9 @@
-package com.example.pruebas;
+package com.example.pruebas.utilidades;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+
+import com.example.pruebas.R;
 
 public class MediaManager {
     public MediaPlayer music;

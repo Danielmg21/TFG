@@ -29,11 +29,6 @@ public class GameActivity extends AppCompatActivity {
         //(new Handler()).postDelayed(this::esperar, 2500);
     }
 
-    public void esperar(){
-        Instrumentation inst = new Instrumentation();
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_SPACE);
-    }
-
     @Override
     public void onBackPressed(){
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(GameActivity.this);

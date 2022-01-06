@@ -2,12 +2,13 @@ package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.pruebas.entidades.Medicine;
+import com.example.pruebas.utilidades.MediaManager;
+import com.example.pruebas.utilidades.Reminder;
 import com.example.pruebas.utilidades.Utilidades;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class ModifyPill extends AppCompatActivity {
@@ -30,7 +33,7 @@ public class ModifyPill extends AppCompatActivity {
     private Button  eliminar, modificar, timeButton;
     private ImageButton back;
     private String nombreMedicine;
-    private int hour, minute;
+    private int hour, minute, medicineID;
     public MediaManager manager;
     public int music;
     public Medicine medicine;
@@ -56,6 +59,7 @@ public class ModifyPill extends AppCompatActivity {
             campoCantidad.setText(String.valueOf(medicine.getCantidad()));
             timeButton.setText(String.format(Locale.getDefault(),"%02d:%02d", medicine.getHora(), medicine.getMinutos()));
             nombreMedicine = medicine.getName();
+            medicineID = medicine.getId();
         }
 
         eliminar = findViewById(R.id.eliminar);
@@ -68,6 +72,7 @@ public class ModifyPill extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 eliminarDatos();
+                                eliminarNotification(medicineID);
                                 finish();
                             }
                         }).setNegativeButton("No",null).setCancelable(false);
@@ -81,6 +86,7 @@ public class ModifyPill extends AppCompatActivity {
             public void onClick(View v) {
                 if(comprobarCampos()){
                     modificarDatos(nombreMedicine);
+                    modificarNotificacion(medicineID);
                     finish();
                 }else{
 
@@ -105,6 +111,28 @@ public class ModifyPill extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Dato eliminado", Toast.LENGTH_LONG).show();
         limpiar();
         db.close();
+    }
+
+    private void eliminarNotification(int id){
+        Intent intent = new Intent(ModifyPill.this, Reminder.class);
+        intent.putExtra("id", id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ModifyPill.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private void modificarNotificacion(int id){
+        Intent intent = new Intent(ModifyPill.this, Reminder.class);
+        intent.putExtra("id", id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ModifyPill.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * 60 *24, pendingIntent);
     }
 
     //Modificar la informacion de un medicamento buscando por su nombre

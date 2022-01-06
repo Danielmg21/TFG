@@ -1,31 +1,36 @@
 package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.AlarmManager;
+
+
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.example.pruebas.utilidades.MediaManager;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
 
 
 public class MainScreen extends AppCompatActivity{
 
-    private Button buttonGame;
+    private Button buttonGame, pruebas;
     private ImageButton showPillButton, ajustes, musicOn, musicOff;
-    private String channelID = "notificationID";
+    private String channelID = "notifyChanel";
     private MediaManager manager;
     public int music;
 
@@ -47,6 +52,12 @@ public class MainScreen extends AppCompatActivity{
                 openGameActivity();
             }
         });
+        pruebas =  findViewById(R.id.pruebas);
+        pruebas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         showPillButton = findViewById(R.id.timeButton);
         showPillButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +68,9 @@ public class MainScreen extends AppCompatActivity{
         ajustes = findViewById(R.id.ajustes);
         ajustes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { crearNotificacion();}
+            public void onClick(View v) {
+
+            }
         });
         musicOn = findViewById(R.id.musicOnButton);
         musicOn.setOnClickListener(new View.OnClickListener() {
@@ -75,26 +88,6 @@ public class MainScreen extends AppCompatActivity{
                 }
             }
         });
-    }
-
-    private void crearNotificacion() {
-        Intent intent = new Intent(MainScreen.this, MainScreen.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                .setSmallIcon(R.drawable.logo)
-                .setColor(Color.RED)
-                .setContentTitle("THE DRAGON´S CAVE")
-                .setContentText("Rápido puedes recibir la bendición de la Diosa")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setChannelId(channelID)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from((this));
-        notificationManagerCompat.notify(1, builder.build());
     }
 
     protected void openGameActivity(){
@@ -118,11 +111,13 @@ public class MainScreen extends AppCompatActivity{
     private void crearCanal(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence name = "CANAL";
-            String descripcion = "DEscripcion del canal";
+            String descripcion = "Descripcion del canal";
             int importancia = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel canal = new NotificationChannel(channelID, name, importancia);
+            NotificationChannel canal = new NotificationChannel("notifyChanel", name, importancia);
             canal.setDescription(descripcion);
-
+            canal.enableLights(true);
+            canal.enableVibration(true);
+            canal.setLightColor(Color.RED);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(canal);
         }
