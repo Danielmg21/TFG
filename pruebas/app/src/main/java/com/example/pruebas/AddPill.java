@@ -5,7 +5,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
@@ -20,12 +19,10 @@ import com.example.pruebas.utilidades.MediaManager;
 import com.example.pruebas.utilidades.Reminder;
 import com.example.pruebas.utilidades.Utilidades;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 public class AddPill extends AppCompatActivity {
 

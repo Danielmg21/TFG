@@ -2,8 +2,6 @@ package com.example.pruebas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,16 +13,7 @@ import android.view.View;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
 import com.example.pruebas.utilidades.MediaManager;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Calendar;
-
 
 public class MainScreen extends AppCompatActivity{
 
