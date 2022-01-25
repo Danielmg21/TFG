@@ -85,6 +85,7 @@ public class ShowPills extends AppCompatActivity {
             medicine.setCantidad(cursor.getInt(1));
             medicine.setHora(cursor.getInt(2));
             medicine.setMinutos(cursor.getInt(3));
+            medicine.setNotification(cursor.getInt(4));
             listaPill.add(medicine);
         }
         obtenerLista();
@@ -103,8 +104,7 @@ public class ShowPills extends AppCompatActivity {
             }else{
                 minutos = String.valueOf(listaPill.get(i).getMinutos());
             }
-            //listaInformacion.add(listaPill.get(i).getHora() + ":" + listaPill.get(i).getMinutos() + " ---> " + listaPill.get(i).getName() + " ---> Cantidad: " + listaPill.get(i).getCantidad());
-            listaInformacion.add("Nombre: " + listaPill.get(i).getName() + " | Cantidad: " + listaPill.get(i).getCantidad() + " | Hora: " + hora + ":" + minutos);
+            listaInformacion.add("Name: " + listaPill.get(i).getName() + " | Nº: " + listaPill.get(i).getCantidad() + " | Time: " + hora + ":" + minutos + " | " + listaPill.get(i).getNotification());
         }
     }
 

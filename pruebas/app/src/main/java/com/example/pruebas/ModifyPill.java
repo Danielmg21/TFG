@@ -59,7 +59,7 @@ public class ModifyPill extends AppCompatActivity {
             campoCantidad.setText(String.valueOf(medicine.getCantidad()));
             timeButton.setText(String.format(Locale.getDefault(),"%02d:%02d", medicine.getHora(), medicine.getMinutos()));
             nombreMedicine = medicine.getName();
-            medicineID = medicine.getId();
+            medicineID = medicine.getNotification();
         }
 
         eliminar = findViewById(R.id.eliminar);

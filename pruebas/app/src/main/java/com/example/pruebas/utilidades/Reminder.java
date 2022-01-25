@@ -21,7 +21,10 @@ public class Reminder extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, MainScreen.class), 0);
-        int random = Integer.parseInt(intent.getStringExtra("id"));
+        int random = intent.getIntExtra("id", 1);
+        System.out.println("------------------------------------");
+        System.out.println(random);
+        System.out.println("------------------------------------");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifyChanel")
                 .setSmallIcon(R.drawable.logo)
                 .setColor(Color.BLUE)

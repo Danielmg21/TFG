@@ -122,12 +122,12 @@ public class AddPill extends AppCompatActivity {
         DataBaseHelper helper = new DataBaseHelper(AddPill.this, "bd_medicine",null,1);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        random = new Random().nextInt(1001);
+        random = new Random().nextInt(101);
         values.put(Utilidades.CAMPO_NAME,nombreMedicina);
         values.put(Utilidades.CAMPO_CANTIDAD,cantidadMedicina);
         values.put(Utilidades.CAMPO_HORA, hour);
         values.put(Utilidades.CAMPO_MINUTOS, minute);
-        values.put(Utilidades.CAMPO_ID, random);
+        values.put(Utilidades.CAMPO_NOTIFICATION, random);
         Long idResultado = db.insert(Utilidades.TABLE_MEDICINE,Utilidades.CAMPO_NAME,values);
         Toast.makeText(getApplicationContext(),"Id registro"+idResultado,Toast.LENGTH_SHORT).show();
         db.close();
