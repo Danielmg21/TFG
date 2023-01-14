@@ -104,7 +104,7 @@ public class ShowPills extends AppCompatActivity {
             }else{
                 minutos = String.valueOf(listaPill.get(i).getMinutos());
             }
-            listaInformacion.add("Name: " + listaPill.get(i).getName() + " | Nº: " + listaPill.get(i).getCantidad() + " | Time: " + hora + ":" + minutos + " | " + listaPill.get(i).getNotification());
+            listaInformacion.add("Name: " + listaPill.get(i).getName() + " | Nº: " + listaPill.get(i).getCantidad() + " | Time: " + hora + ":" + minutos);
         }
     }
 
